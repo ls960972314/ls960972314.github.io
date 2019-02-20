@@ -1,4 +1,8 @@
-# quartz内存泄漏问题
+---
+layout: post
+title: quartz内存泄漏问题
+---
+
 
 下面这段话是网上摘抄的:
 >spring中的提供了一个名为 org.springframework.web.util.IntrospectorCleanupListener的监听器.它主要负责处理由　 JavaBeans Introspector的使用而引起的缓冲泄露.
@@ -145,10 +149,6 @@ SimpleThreadPool是通过org.quartz.impl.StdSchedulerFactory类中instantiate()�
             }
         }
     }
----
-layout: post
-title: quartz内存泄露总结
----
 
 
 # Introspector.getBeanInfo方法实现
