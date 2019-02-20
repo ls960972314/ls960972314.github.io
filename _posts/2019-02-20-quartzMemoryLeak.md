@@ -149,7 +149,7 @@ SimpleThreadPool是通过org.quartz.impl.StdSchedulerFactory类中instantiate()�
             }
         }
     }
-
+```
 
 # Introspector.getBeanInfo方法实现
 
