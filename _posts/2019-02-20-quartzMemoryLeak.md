@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: page
 title: quartz内存泄漏问题
 ---
 
