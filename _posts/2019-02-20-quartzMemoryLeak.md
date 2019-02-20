@@ -27,7 +27,7 @@ spring中对它的描述如下:它是一个在web应用关闭的时候,清除Jav
 只知道servlet标准不允许在web容器内自行做线程管理,quartz的问题确实存在。  
 对于Web容器来说,最忌讳应用程序私自启动线程,自行进行线程调度,像Quartz这种在web容器内部默认就自己启动了10线程进行异步job调度的框架本身就是很危险的事情,很容易造成servlet线程资源回收不掉 
 org.springframework.web.util.IntrospectorCleanupListener的代码如下
-```java
+{% highlight java %}
 public class IntrospectorCleanupListener implements ServletContextListener {
 
 	@Override
@@ -42,7 +42,7 @@ public class IntrospectorCleanupListener implements ServletContextListener {
 	}
 
 }
-```
+{% endhighlight %}
 
 CachedIntrospectionResults.clearClassLoader的代码如下,作用是如果判断各个已缓存的classLoader在当前classLoader之下,就remove掉
 ```java
