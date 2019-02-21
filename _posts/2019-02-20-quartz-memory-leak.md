@@ -1,16 +1,13 @@
 ---
 layout: post
 title: quartz内存泄漏问题
-subtitle: 'quartz内存泄漏问题分析总结'
-date: 2019-02-21
-categories: 技术
-cover: 'http://on2171g4d.bkt.clouddn.com/jekyll-theme-h2o-postcover.jpg'
-tags: quartz
+date: 2019-02-20
+categories: test
+tags: quartz 
 ---
 
-
 下面这段话是网上摘抄的:
->spring中的提供了一个名为 org.springframework.web.util.IntrospectorCleanupListener的监听器.它主要负责处理由　 JavaBeans Introspector的使用而引起的缓冲泄露.
+spring中的提供了一个名为 org.springframework.web.util.IntrospectorCleanupListener的监听器.它主要负责处理由　 JavaBeans Introspector的使用而引起的缓冲泄露.
 spring中对它的描述如下:它是一个在web应用关闭的时候,清除JavaBeans Introspector的监听器.web.xml中注册这个listener.可以保证在web 应用关闭的时候释放与掉这个web 应用相关的class loader 
 和由它管理的类.
 如果你使用了JavaBeans Introspector来分析应用中的类,Introspector 缓冲中会保留这些类的引用.结果在你的应用关闭的时候,这些类以及web 应用相关的class loader没有被垃圾回收.
@@ -19,6 +16,8 @@ spring中对它的描述如下:它是一个在web应用关闭的时候,清除Jav
 应用程序中的类从来不直接使用JavaBeans Introspector.所以他们一般不会导致内部查看资源泄露.
 但是一些类库和框架往往会产生这个问题.例如:Struts 和Quartz.单个的内部查看泄漏会导致整个的web应用的类加载器不能进行垃圾回收.在web应用关闭之后,你会看到此应用的所有静态类资源(例如单例).
 这个错误当然不是由这个类自身引起的.
+
+---
 
 个人理解为,quartz中使用了Introspector来分析类,导致类的Class加载到缓存中,当前应用关闭且容器还在的时候,无法回收使用Introspector分析过的class及classLoader,进而导致内存泄漏,如果应用关闭时容器也关闭了,应该就不存在这个问题.
 # quartz内存泄漏解决方案

@@ -42,7 +42,7 @@ nickname: '顺仔'
 
 bio: '后端开发者，热爱技术&设计，简单乐观爱创造'
 
-avatar: '/assets/img/profile.png'
+avatar: '/assets/img/profile.jpg'
 
 
 
@@ -100,13 +100,13 @@ postPatterns: 'circuitBoard'
 
 sns:
 
-  weibo: '//weibo.com/lovecolcol'
+#  weibo: '//weibo.com/lovecolcol'
 
-  juejin: '//juejin.im/user/57a6f434165abd006159b4cc'
+#  juejin: '//juejin.im/user/57a6f434165abd006159b4cc'
+#
+#  instagram: '//www.instagram.com/steveliaocn'
 
-  instagram: '//www.instagram.com/steveliaocn'
-
-  github: '//github.com/kaeyleo'
+  github: '//github.com/ls960972314'
 
 
 
