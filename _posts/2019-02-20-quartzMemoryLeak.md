@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: page
 title: quartz内存泄漏问题
 ---
 
@@ -149,7 +149,7 @@ SimpleThreadPool是通过org.quartz.impl.StdSchedulerFactory类中instantiate()�
             }
         }
     }
-
+```
 
 # Introspector.getBeanInfo方法实现
 
