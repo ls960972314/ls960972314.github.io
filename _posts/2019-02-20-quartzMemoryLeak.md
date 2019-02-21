@@ -1,6 +1,11 @@
 ---
-layout: page
+layout: post
 title: quartz内存泄漏问题
+subtitle: 'quartz内存泄漏问题分析总结'
+date: 2019-02-21
+categories: 技术
+cover: 'http://on2171g4d.bkt.clouddn.com/jekyll-theme-h2o-postcover.jpg'
+tags: quartz
 ---
 
 
