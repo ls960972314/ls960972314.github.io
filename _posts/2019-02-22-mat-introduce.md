@@ -33,9 +33,9 @@ tags: mat
 
 这部分统计了当前堆已使用的总大小
 
-`Size: 18。8 MB Classes: 8。3k Objects: 325。8k Class Loader: 119 Unreachable Objects Histogram`
+`Size: 18.8 MB Classes: 8.3k Objects: 325.8k Class Loader: 119 Unreachable Objects Histogram`
 
-总大小: 18。8M 类大小8。3kb 对象:325。8k 类加载器:119k
+总大小: 18.8M 类大小8.3kb 对象:325.8k 类加载器:119k
 
 Unreachable Objects 代表根不可达的对象，即可以被回收的对象，如下图所示，可以发现最大的前几位对象是char[]，String，byte[]和TRNameListHitRecord对象，这是由于压测时请求量太大，生成了大量的TRNameListHitRecord对象，在对象异步入库后被释放导致。
 
@@ -47,11 +47,11 @@ Unreachable Objects 代表根不可达的对象，即可以被回收的对象，
 
 # 3 Actions
 
-## 3。1 Histogram
+## 3.1 Histogram
 
 应用中各个类所占用内存大小的直方图，倒序排列
 
-可以看到NameList类一共有10078个，黑名单和白名单各5000个左右，占用了241872/1024/1024=0。23M，Retained heap大小为725624/1024/1024=0。69M，符合预期。
+可以看到NameList类一共有10078个，黑名单和白名单各5000个左右，占用了241872/1024/1024=0.23M，Retained heap大小为725624/1024/1024=0.69M，符合预期。
 
 ![img](https://raw.githubusercontent.com/ls960972314/ls960972314.github.io/master/_posts/mat-introduce/1179787087.jpg) 
 
@@ -59,15 +59,15 @@ Unreachable Objects 代表根不可达的对象，即可以被回收的对象，
 
 ![1550890183795](https://raw.githubusercontent.com/ls960972314/ls960972314.github.io/master/_posts/mat-introduce/1550890183795.png)
 
-## 3。2 Dominator Tree
+## 3.2 Dominator Tree
 
 应用中各个对象占比，倒序排列，可以展开某条数据查看其内部具体包含哪些变量及变量的内存占比。第一行的Regex表达式同样可以根据自己的需要进行过滤。
 
-可以发现系统中目前最大的对象为SynMap，它是存储黑白名单的对象，2162040/1024/1024=2。06M，符合预期。
+可以发现系统中目前最大的对象为SynMap，它是存储黑白名单的对象，2162040/1024/1024=2.06M，符合预期。
 
 ![1550889506708](https://raw.githubusercontent.com/ls960972314/ls960972314.github.io/master/_posts/mat-introduce/1550889506708.png)
 
-## 3。3 Top Consumers
+## 3.3 Top Consumers
 
 分析应用中资源消耗最高的对象（Biggest Object）、类（Biggest Top-Level Dominator Classes）、类加载器（Biggest Top-Level Dominator Class Loaders）及包（Biggest Top-Level Dominator Packages）。
 
@@ -79,7 +79,7 @@ Unreachable Objects 代表根不可达的对象，即可以被回收的对象，
 
 
 
-## 3。4 Duplicate Classes
+## 3.4 Duplicate Classes
 
 发现被不同类加载器重复加载的类，如下图所示，发现都是Lambda相关的，无应用中的类，符合预期。
 
@@ -89,7 +89,7 @@ Unreachable Objects 代表根不可达的对象，即可以被回收的对象，
 
 # 4 Report
 
-## 4。1 Leak Suspects
+## 4.1 Leak Suspects
 
 帮助分析应用内存泄漏的工具，结合了饼图与问题列表的形式展示分析结果，可以直接点击问题的Details跳转到具体的问题中进行分析。
 
@@ -99,37 +99,37 @@ Unreachable Objects 代表根不可达的对象，即可以被回收的对象，
 
 点击第二个problem 的detail 进行查看，可以看到问题详情页中包含五个部分：
 
-1。Description（问题描述）
+1.Description（问题描述）
 
 一个名为SynMap被WebAppClassLoader加载的对象共占用了2162040 bytes（占当前已使用内存的10%）。内存累积在<system class loader> 加载器加载的HashMap$Node实例中。
 
 ![1551062337907](https://raw.githubusercontent.com/ls960972314/ls960972314.github.io/master/_posts/mat-introduce/1551062337907.png)
 
-2。Shortest Paths To the Accumulation Point（问题对象到GC根节点的最短路径）
+2.Shortest Paths To the Accumulation Point（问题对象到GC根节点的最短路径）
 
 当前分析出来的问题对象HashMap是用来存储黑白名单缓存的对象，可以看到导GC根节点时经过了SynMap，最终被多个Thread使用。所以此处可以排除非应用中的内存泄漏。
 
 ![img](https://raw.githubusercontent.com/ls960972314/ls960972314.github.io/master/_posts/mat-introduce/193903631.jpg) 
 
-3。Accumulated Objects in Dominator Tree（以当前问题对象为根的Dominator支配树）
+3.Accumulated Objects in Dominator Tree（以当前问题对象为根的Dominator支配树）
 
 此处列出了HashMap的支配树，可以发现它是被SynMap引用且包含了一个大小为16384的数组，点击下图红线的节点，从左边的Attributes中可以查看其具体的属性。
 
 ![img](https://raw.githubusercontent.com/ls960972314/ls960972314.github.io/master/_posts/mat-introduce/532432054.jpg) 
 
-4。Accumulated Objects by Class in Dominator Tree（以当前问题对象为根的Dominator支配树按类的维度分类统计）
+4.Accumulated Objects by Class in Dominator Tree（以当前问题对象为根的Dominator支配树按类的维度分类统计）
 
 这里其实是将上面的支配树中的对象按类汇总了一下，查看相关类占用的内存大小。
 
 ![1551064233151](https://raw.githubusercontent.com/ls960972314/ls960972314.github.io/master/_posts/mat-introduce/1551064233151.png)
 
-5。All Accumulated Objects by Class（所有对象按类的维度统计占用内存分析）
+5.All Accumulated Objects by Class（所有对象按类的维度统计占用内存分析）
 
 这里不同上面的支配树中的类统计，是将所有该对象中使用到的类进行了汇总统计。发现Char[]占用了最大，其次是Date对象，这里我们只观察下大小即可。
 
 ![img](https://raw.githubusercontent.com/ls960972314/ls960972314.github.io/master/_posts/mat-introduce/1124134022.jpg) 
 
-## 4。2 Top Components
+## 4.2 Top Components
 
 展示了大于1%内存的组件
 
@@ -163,7 +163,7 @@ Map碰撞率分析：检测到一个HashMap对象的碰撞率超过了80%。点�
 
 ![1551078518047](https://raw.githubusercontent.com/ls960972314/ls960972314.github.io/master/_posts/mat-introduce/1551078518047.png)
 
-我们想看下这个Map里存储的是什么，点击表中<=0。8的蓝色链接。点击List objects -> with outgoing references可以查看当前的HashMap中存储的是什么。如下图所示，HashMap中存储的为一些TcpEndpoint的对象信息。
+我们想看下这个Map里存储的是什么，点击表中<=0.8的蓝色链接。点击List objects -> with outgoing references可以查看当前的HashMap中存储的是什么。如下图所示，HashMap中存储的为一些TcpEndpoint的对象信息。
 
 ![1551078769952](https://raw.githubusercontent.com/ls960972314/ls960972314.github.io/master/_posts/mat-introduce/1551078769952.png)
 
