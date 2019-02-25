@@ -6,7 +6,7 @@ categories: test
 tags: quartz 
 ---
 
-[TOC]
+{:toc}
 
 # 结构总览
 
