@@ -168,10 +168,3 @@ Map碰撞率分析：检测到一个HashMap对象的碰撞率超过了80%。点�
 ![1551078769952](https://raw.githubusercontent.com/ls960972314/ls960972314.github.io/master/_posts/mat-introduce/1551078769952.png)
 
 
-
-# 5 Heap Dump Overview
-
-项目的具体统计信息还可以点击菜单栏的第六个图标,选择Heap Dump Overview进行查看
-
-![img](https://raw.githubusercontent.com/ls960972314/ls960972314.github.io/master/_posts/mat-introduce/599344462.jpg) 
-
