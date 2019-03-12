@@ -39,7 +39,7 @@ tags: spi
 
 **@SPI**：定义一个接口是一个可被扩展的接口，@SPI注解中的值代表其默认的实现类，对应上面配置文件中的key。下图为Compile接口，默认实现为javassist。
 
-![1552302968617](https://raw.githubusercontent.com/ls960972314/ls960972314.github.io/master/_posts/dubbo-spi-demo/1552302968617.jpg)
+![img](https://raw.githubusercontent.com/ls960972314/ls960972314.github.io/master/_posts/dubbo-spi-demo/1552302968617.jpg)
 
 **@Adaptive**：分为两种
 
@@ -69,7 +69,7 @@ tags: spi
 
 先看下主要代码及代码运行结果，注意看红线部分，我们当前实现的需求是核查的2301原因码：
 
-![1552310720159](https://raw.githubusercontent.com/ls960972314/ls960972314.github.io/master/_posts/dubbo-spi-demo/1552310720159.jpg)
+![img](https://raw.githubusercontent.com/ls960972314/ls960972314.github.io/master/_posts/dubbo-spi-demo/1552310720159.jpg)
 
 好，现在需求变了，我们要新增一个差错提交的2201的原因码，怎么办？改代码结构？不存在的，看下图，只需要将disputeType和disputeReasonCode的值调整一下即可：
 
