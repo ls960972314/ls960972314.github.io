@@ -1,0 +1,3 @@
+logFilter=com.demo.spi.filter.LogFilter
+limitFilter=com.demo.spi.filter.LimitFilter
+tokenFilter=com.demo.spi.filter.TokenFilter

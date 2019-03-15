@@ -1,0 +1,3 @@
+inspectTran=com.demo.spi.disputeTran.InspectTran
+submitTran=com.demo.spi.disputeTran.SubmitTran
+adptiveDisputeTran=com.demo.spi.disputeTran.AdaptiveDisputeTran
